@@ -11,24 +11,31 @@ protected:
 
 public:
     Animal(const std::string& n, const std::string& s, int a, double w)
-        : name(n), species(s), age(a), weight(w) {
-    }
+        : name(n), species(s), age(a), weight(w) {}
 
     virtual void makeSound() const {
-        std::cout << name << " Èçäàåò çâóê." << std::endl;
+        std::cout << name << " Ð˜Ð·Ð´Ð°ÐµÑ‚ Ð·Ð²ÑƒÐº." << std::endl;
     }
 
     virtual void printInfo() const {
-        std::cout << "Èìÿ: " << name << std::endl;
-        std::cout << "Âèä: " << species << std::endl;
-        std::cout << "Âîçðàñò: " << age << std::endl;
-        std::cout << "Âåñ: " << weight << " êã" << std::endl;
+        std::cout << "Ð˜Ð¼Ñ: " << name << std::endl;
+        std::cout << "Ð’Ð¸Ð´: " << species << std::endl;
+        std::cout << "Ð’Ð¾Ð·Ñ€Ð°ÑÑ‚: " << age << std::endl;
+        std::cout << "Ð’ÐµÑ: " << weight << " ÐºÐ³" << std::endl;
+    }
+
+    void eat() const {
+        std::cout << name << " ÐšÑƒÑˆÐ°ÐµÑ‚." << std::endl;
+    }
+
+    void sleep() const {
+        std::cout << name << " Ð¡Ð¿Ð¸Ñ‚." << std::endl;
     }
 
     virtual ~Animal() {}
 };
 
-
+// ðŸ±
 class Cat : virtual public Animal {
 protected:
     std::string color;
@@ -38,19 +45,26 @@ protected:
 public:
     Cat(const std::string& n, int a, double w,
         const std::string& c, int l, bool lazy)
-        : Animal(n, "Êîøêà", a, w),
-        color(c), lives(l), isLazy(lazy) {
-    }
+        : Animal(n, "ÐšÐ¾ÑˆÐºÐ°", a, w),
+          color(c), lives(l), isLazy(lazy) {}
 
     void meow() const {
-        std::cout << name << " Ìÿóêàåò." << std::endl;
+        std::cout << name << " ÐœÑÑƒÐºÐ°ÐµÑ‚." << std::endl;
     }
 
     void makeSound() const override {
         meow();
     }
+
+    void printInfo() const override {
+        Animal::printInfo();
+        std::cout << "Ð¦Ð²ÐµÑ‚: " << color << std::endl;
+        std::cout << "Ð–Ð¸Ð·Ð½Ð¸: " << lives << std::endl;
+        std::cout << "Ð›ÐµÐ½Ð¸Ð²Ð°Ñ: " << (isLazy ? "Ð”Ð°" : "ÐÐµÑ‚") << std::endl;
+    }
 };
 
+// ðŸ¦
 class Bird : virtual public Animal {
 protected:
     double wingSpan;
@@ -59,64 +73,100 @@ protected:
 
 public:
     Bird(const std::string& n, int a, double w,
-        double ws, bool fly, const std::string& h)
-        : Animal(n, "Ïòèöà", a, w),
-        wingSpan(ws), canFly(fly), habitat(h) {
-    }
+         double ws, bool fly, const std::string& h)
+        : Animal(n, "ÐŸÑ‚Ð¸Ñ†Ð°", a, w),
+          wingSpan(ws), canFly(fly), habitat(h) {}
 
     void fly() const {
         if (canFly)
-            std::cout << name << " Ëåòàåò." << std::endl;
+            std::cout << name << " Ð›ÐµÑ‚Ð°ÐµÑ‚." << std::endl;
         else
-            std::cout << name << " Íå óìååò ëåòàòü." << std::endl;
+            std::cout << name << " ÐÐµ ÑƒÐ¼ÐµÐµÑ‚ Ð»ÐµÑ‚Ð°Ñ‚ÑŒ." << std::endl;
     }
 
     void makeSound() const override {
-        std::cout << name << " ×èðèêàåò." << std::endl;
+        std::cout << name << " Ð§Ð¸Ñ€Ð¸ÐºÐ°ÐµÑ‚." << std::endl;
+    }
+
+    void printInfo() const override {
+        Animal::printInfo();
+        std::cout << "Ð Ð°Ð·Ð¼Ð°Ñ… ÐºÑ€Ñ‹Ð»ÑŒÐµÐ²: " << wingSpan << std::endl;
+        std::cout << "ÐœÐ¾Ð¶ÐµÑ‚ Ð»ÐµÑ‚Ð°Ñ‚ÑŒ: " << (canFly ? "Ð”Ð°" : "ÐÐµÑ‚") << std::endl;
+        std::cout << "Ð¡Ñ€ÐµÐ´Ð° Ð¾Ð±Ð¸Ñ‚Ð°Ð½Ð¸Ñ: " << habitat << std::endl;
     }
 };
 
+// ðŸ¶
+class Dog : public Animal {
+private:
+    std::string breed;
+    bool isTrained;
+    int energyLevel;
 
+public:
+    Dog(const std::string& n, int a, double w,
+        const std::string& b, bool t, int e)
+        : Animal(n, "Ð¡Ð¾Ð±Ð°ÐºÐ°", a, w),
+          breed(b), isTrained(t), energyLevel(e) {}
+
+    void bark() const {
+        std::cout << name << " Ð›Ð°ÐµÑ‚." << std::endl;
+    }
+
+    void makeSound() const override {
+        bark();
+    }
+
+    void printInfo() const override {
+        Animal::printInfo();
+        std::cout << "ÐŸÐ¾Ñ€Ð¾Ð´Ð°: " << breed << std::endl;
+        std::cout << "Ð”Ñ€ÐµÑÑÐ¸Ñ€Ð¾Ð²Ð°Ð½: " << (isTrained ? "Ð”Ð°" : "ÐÐµÑ‚") << std::endl;
+        std::cout << "Ð­Ð½ÐµÑ€Ð³Ð¸Ñ: " << energyLevel << std::endl;
+    }
+};
+
+// ðŸ±âœˆï¸
 class FlyingCat : public Cat, public Bird {
 private:
-    int flightspeed;
+    double flightSpeed;
     bool hasWings;
     double maxHeight;
 
 public:
     FlyingCat(const std::string& n, int a, double w,
-        const std::string& c, int l, bool lazy,
-        double ws, bool fly, const std::string& h,
-        double speed , bool wings, double height)
-        : Animal(n, "Ëåòàþùèé êîò", a, w), 
-        Cat(n, a, w, c, l, lazy),
-        Bird(n, a, w, ws, fly, h),
-        flightspeed(speed), hasWings(wings), maxHeight(height) {
-    }
+              const std::string& c, int l, bool lazy,
+              double ws, bool fly, const std::string& h,
+              double speed, bool wings, double height)
+        : Animal(n, "Ð›ÐµÑ‚Ð°ÑŽÑ‰Ð¸Ð¹ ÐºÐ¾Ñ‚", a, w),
+          Cat(n, a, w, c, l, lazy),
+          Bird(n, a, w, ws, fly, h),
+          flightSpeed(speed),
+          hasWings(wings),
+          maxHeight(height) {}
 
     void boostSpeed() const {
-        std::cout << name << " Óñêîðÿåòñÿ äî " << flightspeed << "êì/÷." << std::endl;
+        std::cout << name << " ÑƒÑÐºÐ¾Ñ€ÑÐµÑ‚ÑÑ Ð´Ð¾ " << flightSpeed << " ÐºÐ¼/Ñ‡." << std::endl;
     }
 
     void flyHigh() const {
-        std::cout << name << " Âçëåòàåò íà âûñîòó " << maxHeight << " ìåòðîâ." << std::endl;
+        std::cout << name << " Ð²Ð·Ð»ÐµÑ‚Ð°ÐµÑ‚ Ð½Ð° Ð²Ñ‹ÑÐ¾Ñ‚Ñƒ " << maxHeight << " Ð¼ÐµÑ‚Ñ€Ð¾Ð²." << std::endl;
     }
 
     void showWings() const {
-        std::cout << name << (hasWings ? " Èìååò êðûëüÿ." : " Áåç êðûëüåâ.") << std::endl;
+        std::cout << name << (hasWings ? " Ð¸Ð¼ÐµÐµÑ‚ ÐºÑ€Ñ‹Ð»ÑŒÑ." : " Ð±ÐµÐ· ÐºÑ€Ñ‹Ð»ÑŒÐµÐ².") << std::endl;
     }
 
     void makeSound() const override {
-        std::cout << name << " Ìÿóêàåò è ÷èðèêàåò îäíîâðåìåííî!" << std::endl;
+        std::cout << name << " ÐœÑÑƒÐºÐ°ÐµÑ‚ Ð¸ Ñ‡Ð¸Ñ€Ð¸ÐºÐ°ÐµÑ‚ Ð¾Ð´Ð½Ð¾Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾!" << std::endl;
     }
 
     void printInfo() const override {
         Animal::printInfo();
-        std::cout << "Öâåò: " << color << std::endl;
-        std::cout << "Æèçíè: " << lives << std::endl;
-        std::cout << "Ðàçìàõ êðûëüåâ: " << wingSpan << std::endl;
-        std::cout << "Ñêîðîñòü ïîë¸òà: " << flightspeed << std::endl;
-        std::cout << "Ìàêñ âûñîòà: " << maxHeight << std::endl;
+        std::cout << "Ð¦Ð²ÐµÑ‚: " << color << std::endl;
+        std::cout << "Ð–Ð¸Ð·Ð½Ð¸: " << lives << std::endl;
+        std::cout << "Ð Ð°Ð·Ð¼Ð°Ñ… ÐºÑ€Ñ‹Ð»ÑŒÐµÐ²: " << wingSpan << std::endl;
+        std::cout << "Ð¡ÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð¿Ð¾Ð»ÐµÑ‚Ð°: " << flightSpeed << " ÐºÐ¼/Ñ‡" << std::endl;
+        std::cout << "ÐœÐ°ÐºÑ Ð²Ñ‹ÑÐ¾Ñ‚Ð°: " << maxHeight << std::endl;
     }
 };
 
@@ -124,28 +174,41 @@ int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    FlyingCat fc(
-        "ÊðûëàòûéÒèøà",
-        4,
-        5.5,
-        "×åðíûé", 
-        9,
-        false,
-        0.8, 
-        true,
-        "Ãîðû",
-        80, 
-        true,
-        100.0);
+    Dog dog("Ð¨Ð°Ñ€Ð¸Ðº", 3, 9.0, "ÐžÐ²Ñ‡Ð°Ñ€ÐºÐ°", true, 8);
+    Cat cat("ÐœÑƒÑ€ÐºÐ°", 5, 6.5, "Ð‘ÐµÐ»Ð°Ñ", 9, true);
+    Bird bird("ÐšÐµÑˆÐ°", 2, 1.2, 0.4, true, "Ð›ÐµÑ");
+    FlyingCat fc("Ð¡ÑƒÐ¿ÐµÑ€ÐœÑƒÑ€Ð·Ð¸Ðº", 4, 5.5,
+                 "Ð§ÐµÑ€Ð½Ñ‹Ð¹", 9, false,
+                 0.8, true, "Ð“Ð¾Ñ€Ñ‹",
+                 60.0, true, 100.0);
 
+    std::cout << "\n=== DOG ===\n";
+    dog.printInfo();
+    dog.makeSound();
+    dog.eat();
+
+    std::cout << "\n=== CAT ===\n";
+    cat.printInfo();
+    cat.makeSound();
+    cat.eat();
+
+    std::cout << "\n=== BIRD ===\n";
+    bird.printInfo();
+    bird.makeSound();
+    bird.fly();
+
+    std::cout << "\n=== FLYING CAT ===\n";
     fc.printInfo();
-    std::cout << std::endl;
-
     fc.makeSound();
     fc.fly();
+    fc.meow();
     fc.boostSpeed();
     fc.flyHigh();
     fc.showWings();
+
+    std::cout << "\n=== Animal methods from FlyingCat ===\n";
+    fc.eat();
+    fc.sleep();
 
     return 0;
 }
