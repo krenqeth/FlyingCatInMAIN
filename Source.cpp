@@ -35,7 +35,7 @@ public:
     virtual ~Animal() {}
 };
 
-// 🐱
+
 class Cat : virtual public Animal {
 protected:
     std::string color;
@@ -64,7 +64,7 @@ public:
     }
 };
 
-// 🐦
+
 class Bird : virtual public Animal {
 protected:
     double wingSpan;
@@ -96,7 +96,7 @@ public:
     }
 };
 
-// 🐶
+
 class Dog : public Animal {
 private:
     std::string breed;
@@ -125,7 +125,7 @@ public:
     }
 };
 
-// 🐱✈️
+
 class FlyingCat : public Cat, public Bird {
 private:
     double flightSpeed;
